@@ -5,12 +5,12 @@ namespace exercise.main.Products;
 
 public class Coffee : IProduct
 {
-    private static int GLOBALID = 0;
     private decimal _basePrice;
+    private bool _isDiscounted = false;
     public string Sku { get; set; }
     public string Name { get; set; }
     public string Variant { get; set; }
-    public int Id { get; }
+    public Guid Id { get; } = Guid.NewGuid();
 
     public Coffee(string ProductSku, string ProductName, string ProductVariant, decimal ProductBasePrice)
     {
@@ -18,12 +18,25 @@ public class Coffee : IProduct
         this.Name = ProductName;
         this.Variant = ProductVariant;
         this._basePrice = ProductBasePrice;
-        this.Id = GLOBALID;
-        GLOBALID++;
     }
 
     public decimal GetPrice()
     {
         return _basePrice;
+    }
+    public bool ApplyDiscount(decimal discount)
+    {
+        if (_isDiscounted) return false;
+
+        _basePrice = Math.Max(_basePrice - discount, 0);
+
+        _isDiscounted = true;
+
+        return true;
+    }
+
+    public bool IsDiscounted()
+    {
+        return _isDiscounted;
     }
 }

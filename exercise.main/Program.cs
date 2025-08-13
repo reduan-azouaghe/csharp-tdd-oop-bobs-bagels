@@ -1,4 +1,5 @@
 ﻿using exercise.main;
+using exercise.main.Objects.Discounts;
 using exercise.main.Products;
 
 Inventory TestInventory = new();
@@ -18,6 +19,13 @@ TestInventory.AddToInventory(new Filling("FILS", "Filling", "Smoked Salmon", 0.1
 TestInventory.AddToInventory(new Filling("FILH", "Filling", "Ham", 0.12m));
 
 Basket TestBasket = new(99, TestInventory);
+CoffeeBagelsDiscount d = new CoffeeBagelsDiscount();
 
-TestBasket.ChangeCapacity(0);
 TestBasket.AddProduct(new Bagel("BGLO", "Bagel", "Onion", 0.49m));
+TestBasket.AddProduct(new Coffee("COFB", "Coffee", "Black", 0.99m));
+
+
+TestBasket.ApplyDiscount(d);
+
+Console.WriteLine(TestBasket);
+

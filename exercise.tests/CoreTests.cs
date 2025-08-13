@@ -12,8 +12,6 @@ namespace exercise.tests
         [SetUp]
         public void Setup()
         {
-
-
             TestInventory = new();
             TestInventory.AddToInventory(new Bagel("BGLO", "Bagel", "Onion", 0.49m));
             TestInventory.AddToInventory(new Bagel("BGLP", "Bagel", "Plain", 0.39m));
@@ -109,8 +107,8 @@ namespace exercise.tests
         public void AddFillingToBagel_BagleHasFilling()
         {
             Filling f = new Filling("FILX", "Filling", "Cream Cheese", 0.12m);
-            Bagel b = new("BGLO", "Bagel", "Onion", 0.49m);
 
+            Bagel b = new("BGLO", "Bagel", "Onion", 0.49m);
             b.AddFilling(f);
 
             Assert.That(b.GetFillings()[0], Is.EqualTo(f));
@@ -120,7 +118,6 @@ namespace exercise.tests
         public void FillingGetPrice_PriceOfFilling()
         {
             Filling f = new Filling("FILX", "Filling", "Cream Cheese", 0.12m);
-
             Assert.That(f.GetPrice, Is.EqualTo(0.12m));
         }
 

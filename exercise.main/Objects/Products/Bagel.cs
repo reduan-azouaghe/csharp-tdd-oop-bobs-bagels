@@ -7,9 +7,8 @@ public class Bagel : IProduct
 {
     private List<Filling> _fillings = [];
     private decimal _basePrice;
-
-    private static int GLOBALID = 0;
-    public int Id { get; }
+    private bool _isDiscounted = false;
+    public Guid Id { get; } = Guid.NewGuid();
 
     public Bagel(string ProductSku, string ProductName, string ProductVariant, decimal ProductBasePrice)
     {
@@ -17,13 +16,12 @@ public class Bagel : IProduct
         this.Name = ProductName;
         this.Variant = ProductVariant;
         this._basePrice = ProductBasePrice;
-        this.Id = GLOBALID;
-        GLOBALID++;
     }
 
     public string Sku { get; set; }
     public string Name { get; set; }
     public string Variant { get; set; }
+
     public decimal GetPrice()
     {
         if (_fillings.Count == 0) return _basePrice;
@@ -31,13 +29,29 @@ public class Bagel : IProduct
         return _basePrice + _fillings.Sum(f => f.GetPrice());
     }
 
+    public bool ApplyDiscount(decimal discount)
+    {
+        if (_isDiscounted) return false;
+
+        _basePrice = Math.Max(_basePrice - discount, 0);
+
+        _isDiscounted = true;
+
+        return true;
+    }
+
+    public bool IsDiscounted()
+    {
+        return _isDiscounted;
+    }
+
     public List<Filling> GetFillings()
     {
         return _fillings;
     }
 
-    public void AddFilling(IProduct BagelFilling)
+    public void AddFilling(Filling BagelFilling)
     {
-        _fillings.Add((Filling)BagelFilling);
+        _fillings.Add(BagelFilling);
     }
 }
